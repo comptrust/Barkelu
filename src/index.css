@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Roboto", "Inter", -apple-system, sans-serif;
+  --color-jumia-orange: #f68b1e;
+  --color-jumia-dark-orange: #e07a10;
+  --color-jumia-light-orange: #fef3e9;
+  --color-jumia-dark: #282828;
+}
+
+@layer base {
+  body {
+    @apply bg-[#f1f1f2] text-[#282828] antialiased text-sm;
+    font-family: 'Roboto', -apple-system, sans-serif;
+  }
+}
+
+/* Jumia specific badge animations */
+@keyframes flashPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.flash-pulse {
+  animation: flashPulse 2s infinite ease-in-out;
+}
+
+/* Hide default Google Translate banner and iframe elements */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+  font-size: 0 !important;
+  display: inline-flex !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+  margin: 0 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  border: 1px solid #d4d4d8 !important;
+  background-color: #ffffff !important;
+  color: #27272a !important;
+  cursor: pointer !important;
+}

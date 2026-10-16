@@ -1,0 +1,127 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["customer", "merchant", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "phone": { "type": "string" },
+        "walletBalance": { "type": "number" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Merchant": {
+      "title": "Merchant",
+      "description": "Business profile for deal providers",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "location": { "type": "string" },
+        "rating": { "type": "number" },
+        "ownerUid": { "type": "string" },
+        "phone": { "type": "string" },
+        "bankAccountOrWave": { "type": "string" }
+      },
+      "required": ["name", "ownerUid"]
+    },
+    "Deal": {
+      "title": "Deal",
+      "description": "A coupon or discount offer",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "originalPrice": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "category": { "type": "string" },
+        "merchantId": { "type": "string" },
+        "merchantName": { "type": "string" },
+        "expiryDate": { "type": "string", "format": "date-time" },
+        "imageUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "expired", "draft"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "originalPrice", "discountPrice", "merchantId", "status"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "A purchased deal instance",
+      "type": "object",
+      "properties": {
+        "dealId": { "type": "string" },
+        "userId": { "type": "string" },
+        "code": { "type": "string" },
+        "status": { "type": "string", "enum": ["unused", "used", "refunded"] },
+        "purchaseDate": { "type": "string", "format": "date-time" },
+        "dealTitle": { "type": "string" }
+      },
+      "required": ["dealId", "userId", "code", "status"]
+    },
+    "Transaction": {
+      "title": "MerchantTransaction",
+      "description": "Platform ledger recording sales, 10% commission deductions, and net payouts",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["sale", "payout", "commission_fee", "refund", "bonus"] },
+        "merchantId": { "type": "string" },
+        "grossAmount": { "type": "number" },
+        "commissionRate": { "type": "number" },
+        "commissionAmount": { "type": "number" },
+        "netAmount": { "type": "number" },
+        "paymentGateway": { "type": "string" },
+        "status": { "type": "string", "enum": ["completed", "pending", "failed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "merchantId", "grossAmount", "netAmount", "status"]
+    },
+    "PayoutRequest": {
+      "title": "PayoutRequest",
+      "description": "Merchant withdrawal request to Wave, Orange Money, or PayDunya",
+      "type": "object",
+      "properties": {
+        "merchantId": { "type": "string" },
+        "merchantName": { "type": "string" },
+        "amount": { "type": "number" },
+        "netPayout": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "recipientPhoneOrAccount": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "processing", "completed", "rejected"] },
+        "requestedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["merchantId", "amount", "netPayout", "paymentMethod", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/merchants/{merchantId}": {
+      "schema": "Merchant",
+      "description": "Merchant business profiles"
+    },
+    "/deals/{dealId}": {
+      "schema": "Deal",
+      "description": "Available deals"
+    },
+    "/coupons/{couponId}": {
+      "schema": "Coupon",
+      "description": "Purchased coupons"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Native multi-vendor financial transactions ledger"
+    },
+    "/payout_requests/{payoutId}": {
+      "schema": "PayoutRequest",
+      "description": "Merchant payout withdrawal requests"
+    }
+  }
+}

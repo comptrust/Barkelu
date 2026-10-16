@@ -1,0 +1,7 @@
+{
+  "name": "Barkelu",
+  "description": "A premier local deals and coupon marketplace based in Senegal, inspired by DealDey and Groupon. Multi-currency by country and multilingual with Google Translate.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
